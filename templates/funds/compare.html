@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Compare Mutual Funds</h2>
+
+<p>Select two funds to compare performance.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <select name="fund1" class="form-select mb-2">
+        {% for fund in funds %}
+            <option value="{{ fund.id }}">{{ fund.name }}</option>
+        {% endfor %}
+    </select>
+
+    <select name="fund2" class="form-select mb-2">
+        {% for fund in funds %}
+            <option value="{{ fund.id }}">{{ fund.name }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" class="btn btn-primary">Compare</button>
+</form>
+
+{% endblock %}

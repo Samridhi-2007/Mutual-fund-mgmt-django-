@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import MutualFund
+from .models import Fund
 
-admin.site.register(MutualFund)
+admin.site.register(Fund)

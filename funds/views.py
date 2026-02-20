@@ -1,6 +1,10 @@
 from django.shortcuts import render
-from .models import MutualFund
+from .models import Fund
 
-def home(request):
-    funds = MutualFund.objects.all()
-    return render(request, 'funds/home.html', {'funds': funds})
+def fund_list(request):
+    funds = Fund.objects.all()
+    return render(request, 'funds/fund_list.html', {'funds': funds})
+
+def compare_funds(request):
+    funds = Fund.objects.all()
+    return render(request, 'funds/compare.html', {'funds': funds})

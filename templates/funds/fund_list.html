@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Available Mutual Funds</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Risk</th>
+        <th>1 Year Return</th>
+    </tr>
+
+    {% for fund in funds %}
+    <tr>
+        <td>{{ fund.name }}</td>
+        <td>{{ fund.category }}</td>
+        <td>{{ fund.risk_level }}</td>
+        <td>{{ fund.returns_1yr }}%</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
