@@ -1,6 +1,6 @@
 from django.db import models
 
-class MutualFund(models.Model):
+class Fund(models.Model):
     name= models.CharField(max_length=200)
     category = models.CharField(max_length=200)
     risk_level = models.CharField(max_length=200)

@@ -6,3 +6,4 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('dashboard/', views.dashboard, name='dashboard'),
 ]
+

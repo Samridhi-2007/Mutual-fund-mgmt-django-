@@ -1,5 +1,6 @@
 
-from .models import MutualFund
+
+
 
 
 from django.shortcuts import render
@@ -12,3 +13,15 @@ def fund_list(request):
 
 def compare(request):
     return render(request, 'funds/compare.html')
+
+from django.shortcuts import render
+from .models import Fund
+
+def fund_list(request):
+    funds = Fund.objects.all()
+    return render(request, 'funds/fund_list.html', {'funds': funds})
+
+def compare_funds(request):
+    funds = Fund.objects.all()
+    return render(request, 'funds/compare.html', {'funds': funds})
+
