@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'users',
     'funds',
     'education',
-    'advisors',
 ]
 
 

@@ -5,11 +5,14 @@
 <h2>Dashboard</h2>
 
 <p>Welcome, {{ user.username }}!</p>
+<p>You are successfully logged in</p>
 
 {% if user.role == 'investor' %}
     <p>You can explore and compare funds.</p>
-{% elif user.role == 'advisor' %}
-    <p>You can guide investors and analyze funds.</p>
+
+{% endif %}
+{% elif user.role == 'user' %}
+    <p>You can invest money and analyze funds.</p>
 {% endif %}
 
 {% endblock %}
