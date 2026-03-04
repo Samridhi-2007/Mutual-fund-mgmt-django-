@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h3 class="mb-2">Invest in {{ fund.name }}</h3>
+                <p class="text-secondary mb-3">
+                    Category: {{ fund.category }} | Risk: {{ fund.risk_level }} | 1Y Return: {{ fund.returns_1yr }}%
+                </p>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Investment Amount</label>
+                        {{ form.amount }}
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">NAV Price</label>
+                        {{ form.nav_price }}
+                        <small class="text-secondary d-block mt-1">{{ form.nav_price.help_text }}</small>
+                    </div>
+                    <div class="d-flex gap-2 mt-3">
+                        <button type="submit" class="btn btn-success">Confirm Investment</button>
+                        <a href="{% url 'fund_detail' fund.pk %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

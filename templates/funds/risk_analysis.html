@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-4 p-md-5 mb-4 rounded-4 text-white" style="background: linear-gradient(135deg, #2b244f, #30418f);">
+    <h2 class="mb-2">Risk Analysis</h2>
+    <p class="mb-0 text-light">Understand the overall risk distribution across all available mutual funds.</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <small class="text-secondary">Total Funds</small>
+                <h3 class="mb-0">{{ total_funds }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <small class="text-secondary">Low Risk</small>
+                <h3 class="mb-0 text-success">{{ risk_buckets.Low }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <small class="text-secondary">Moderate Risk</small>
+                <h3 class="mb-0 text-warning">{{ risk_buckets.Moderate }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <small class="text-secondary">High Risk</small>
+                <h3 class="mb-0 text-danger">{{ risk_buckets.High }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <h5 class="mb-3">Fund Risk Breakdown</h5>
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Fund Name</th>
+                        <th>Category</th>
+                        <th>Risk Level</th>
+                        <th>1Y Return</th>
+                        <th>3Y Return</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for fund in funds %}
+                    <tr>
+                        <td>{{ fund.name }}</td>
+                        <td>{{ fund.category }}</td>
+                        <td>{{ fund.risk_level }}</td>
+                        <td>{{ fund.returns_1yr }}%</td>
+                        <td>{{ fund.returns_3yr }}%</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-secondary">No funds available for risk analysis.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

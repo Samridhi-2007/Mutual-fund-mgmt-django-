@@ -1,25 +1,42 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-<h2>Available Mutual Funds</h2>
-
-<table class="table table-bordered">
-    <tr>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Risk</th>
-        <th>1 Year Return</th>
-    </tr>
-
+<div class="p-4 p-md-5 mb-4 rounded-4 text-white" style="background: linear-gradient(135deg, #16334f, #245d86);">
+    <h2 class="mb-2">Explore Mutual Funds</h2>
+    <p class="mb-0 text-light">Analyze performance, understand risk levels, and choose funds aligned with your goals.</p>
+</div>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Available Mutual Funds</h2>
+    {% if request.user.is_authenticated and request.user.role == 'ADMIN' %}<a href="{% url 'fund_create' %}" class="btn btn-primary">Add Fund</a>{% endif %}
+</div>
+<table class="table table-bordered table-striped bg-white">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Risk</th>
+            <th>1 Year Return</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for fund in funds %}
-    <tr>
-        <td>{{ fund.name }}</td>
-        <td>{{ fund.category }}</td>
-        <td>{{ fund.risk_level }}</td>
-        <td>{{ fund.returns_1yr }}%</td>
-    </tr>
+        <tr>
+            <td><a href="{% url 'fund_detail' fund.pk %}">{{ fund.name }}</a></td>
+            <td>{{ fund.category }}</td>
+            <td>{{ fund.risk_level }}</td>
+            <td>{{ fund.returns_1yr }}%</td>
+            <td>
+                <a href="{% url 'fund_detail' fund.pk %}" class="btn btn-sm btn-outline-secondary">View</a>
+                {% if request.user.is_authenticated and request.user.role == 'ADMIN' %}
+                <a href="{% url 'fund_update' fund.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                <a href="{% url 'fund_delete' fund.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="5" class="text-center">No funds available.</td></tr>
     {% endfor %}
+    </tbody>
 </table>
-
+<a href="{% url 'compare_funds' %}" class="btn btn-warning">Compare Funds</a>
 {% endblock %}

@@ -1,15 +1,238 @@
 {% extends 'base.html' %}
-
+{% block extra_head %}
+<style>
+    .dash-wrap {
+        background: linear-gradient(135deg, #0f2b46, #1f4f76);
+        color: #f2f8ff;
+        border-radius: 24px;
+        padding: 2rem;
+        box-shadow: 0 18px 45px rgba(10, 35, 58, 0.35);
+        margin-bottom: 1.2rem;
+        position: relative;
+    }
+    .dash-title {
+        font-weight: 700;
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        margin-bottom: 0.35rem;
+    }
+    .dash-subtitle {
+        color: #c9ddf0;
+        margin-bottom: 0;
+    }
+    .user-pill {
+        display: inline-block;
+        font-size: 0.78rem;
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 999px;
+        padding: 0.2rem 0.7rem;
+        margin-bottom: 0.8rem;
+    }
+    .avatar-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.65);
+        background: linear-gradient(135deg, #24c7ff, #4fe7b8);
+        color: #083248;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+    }
+    .profile-menu {
+        min-width: 250px;
+        border-radius: 14px;
+        border: 1px solid #d9e4ee;
+        padding: 0.5rem;
+    }
+    .profile-row {
+        padding: 0.45rem 0.55rem;
+        border-radius: 10px;
+        background: #f6f9fc;
+        margin-bottom: 0.45rem;
+    }
+    .detail-card {
+        background: #ffffff;
+        border: 1px solid #e2ebf3;
+        border-radius: 18px;
+        box-shadow: 0 12px 26px rgba(20, 50, 79, 0.08);
+        padding: 1.1rem;
+        height: 100%;
+    }
+    .metric {
+        font-size: 1.45rem;
+        font-weight: 700;
+        color: #113454;
+    }
+    .detail-label {
+        color: #5c7288;
+        font-size: 0.9rem;
+    }
+    .feature-card {
+        border: 1px solid #dde7f0;
+        border-radius: 18px;
+        padding: 1rem;
+        background: #fff;
+        height: 100%;
+        box-shadow: 0 10px 24px rgba(15, 40, 63, 0.06);
+    }
+    .feature-card h5 {
+        margin-bottom: 0.4rem;
+        color: #14314f;
+        font-weight: 700;
+    }
+    .feature-card p {
+        color: #60758b;
+        margin-bottom: 0.8rem;
+    }
+    .feature-btn {
+        border-radius: 10px;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
 {% block content %}
+<section class="dash-wrap">
+    <div class="dropdown">
+        <button class="avatar-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ user.username|first|upper }}
+        </button>
+        <div class="dropdown-menu dropdown-menu-end profile-menu">
+            <div class="px-2 py-1 fw-semibold">My Profile</div>
+            <div class="dropdown-divider"></div>
+            <div class="profile-row">
+                <small class="text-secondary d-block">Username</small>
+                <span class="fw-semibold">{{ user.username }}</span>
+            </div>
+            <div class="profile-row">
+                <small class="text-secondary d-block">Email</small>
+                <span class="fw-semibold">{{ user.email|default:"Not set" }}</span>
+            </div>
+            <div class="profile-row mb-0">
+                <small class="text-secondary d-block">Role</small>
+                <span class="fw-semibold">{{ user.role }}</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item rounded-3" href="{% url 'profile' %}">View Profile</a>
+            <a class="dropdown-item rounded-3" href="{% url 'profile_edit' %}">Edit Profile</a>
+        </div>
+    </div>
+    <span class="user-pill">Investor Dashboard</span>
+    <h2 class="dash-title">Welcome Back</h2>
+    <p class="dash-subtitle">Your investment learning workspace is ready. Explore funds, compare options, and understand risk clearly.</p>
+</section>
 
-<h2>Dashboard</h2>
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="detail-card">
+            <div class="detail-label">Funds Available</div>
+            <div class="metric">{{ fund_count }}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="detail-card">
+            <div class="detail-label">Education Articles</div>
+            <div class="metric">{{ article_count }}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="detail-card">
+            <div class="detail-label">Advisors Available</div>
+            <div class="metric">{{ advisor_count }}</div>
+        </div>
+    </div>
+</div>
 
-<p>Welcome, {{ user.username }}!</p>
-
-{% if user.role == 'investor' %}
-    <p>You can explore and compare funds.</p>
-{% elif user.role == 'advisor' %}
-    <p>You can guide investors and analyze funds.</p>
-{% endif %}
+<div class="row g-3">
+    {% if user.role == 'INVESTOR' %}
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card">
+                <h5>Explore Funds</h5>
+                <p>Browse mutual funds by category, return profile, and risk level.</p>
+                <a class="btn btn-primary feature-btn" href="{% url 'fund_list' %}">Explore</a>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card">
+                <h5>Compare Funds</h5>
+                <p>Compare two funds side by side for better investment decisions.</p>
+                <a class="btn btn-warning feature-btn" href="{% url 'compare_funds' %}">Compare</a>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card">
+                <h5>Risk Analysis</h5>
+                <p>See platform-wide risk distribution and evaluate fund risk buckets.</p>
+                <a class="btn btn-dark feature-btn" href="{% url 'risk_analysis' %}">Analyze</a>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card">
+                <h5>Education Hub</h5>
+                <p>Learn core concepts and practical mutual fund strategies.</p>
+                <a class="btn btn-success feature-btn" href="{% url 'education' %}">Learn</a>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card">
+                <h5>My Investments</h5>
+                <p>Track your actual investments, amount, NAV, and purchased units.</p>
+                <a class="btn btn-info feature-btn" href="{% url 'my_investments' %}">Portfolio</a>
+            </div>
+        </div>
+    {% elif user.role == 'ADVISOR' %}
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+                <h5>Read Funds</h5>
+                <p>View fund universe and support investor guidance with data.</p>
+                <a class="btn btn-primary feature-btn" href="{% url 'fund_list' %}">View Funds</a>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+                <h5>Manage Education</h5>
+                <p>Create, update, and delete educational content for investors.</p>
+                <a class="btn btn-success feature-btn me-2" href="{% url 'article_create' %}">Create</a>
+                <a class="btn btn-outline-success feature-btn" href="{% url 'education' %}">List</a>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+                <h5>Advisor Directory</h5>
+                <p>View advisor profiles and collaborate across expertise areas.</p>
+                <a class="btn btn-dark feature-btn" href="{% url 'advisor_list' %}">View Advisors</a>
+            </div>
+        </div>
+    {% elif user.role == 'ADMIN' %}
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+                <h5>Manage Funds (CRUD)</h5>
+                <p>Create, edit, and delete fund records maintained by admin.</p>
+                <a class="btn btn-primary feature-btn me-2" href="{% url 'fund_create' %}">Create</a>
+                <a class="btn btn-outline-primary feature-btn" href="{% url 'fund_list' %}">List</a>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+                <h5>Manage Advisors (CRUD)</h5>
+                <p>Maintain advisor records and keep guidance network current.</p>
+                <a class="btn btn-dark feature-btn me-2" href="{% url 'advisor_create' %}">Create</a>
+                <a class="btn btn-outline-dark feature-btn" href="{% url 'advisor_list' %}">List</a>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="feature-card">
+                <h5>Manage Education (CRUD)</h5>
+                <p>Review and maintain articles published on the platform.</p>
+                <a class="btn btn-success feature-btn me-2" href="{% url 'article_create' %}">Create</a>
+                <a class="btn btn-outline-success feature-btn" href="{% url 'education' %}">List</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
 
 {% endblock %}

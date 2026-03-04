@@ -1,20 +1,19 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
 <h2>Compare Mutual Funds</h2>
-
-<p>Select two funds to compare performance.</p>
-
-<form method="post">
+<form method="post" class="card card-body bg-white shadow-sm mb-3">
     {% csrf_token %}
-    <select name="fund1" class="form-select mb-2">
+    <label class="form-label">Fund 1</label>
+    <select name="fund1" class="form-select mb-3" required>
+        <option value="">Select a fund</option>
         {% for fund in funds %}
             <option value="{{ fund.id }}">{{ fund.name }}</option>
         {% endfor %}
     </select>
 
-    <select name="fund2" class="form-select mb-2">
+    <label class="form-label">Fund 2</label>
+    <select name="fund2" class="form-select mb-3" required>
+        <option value="">Select a fund</option>
         {% for fund in funds %}
             <option value="{{ fund.id }}">{{ fund.name }}</option>
         {% endfor %}
@@ -23,4 +22,26 @@
     <button type="submit" class="btn btn-primary">Compare</button>
 </form>
 
+{% if comparison %}
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card card-body bg-white shadow-sm">
+            <h5>{{ comparison.fund1.name }}</h5>
+            <p class="mb-1"><strong>Category:</strong> {{ comparison.fund1.category }}</p>
+            <p class="mb-1"><strong>Risk:</strong> {{ comparison.fund1.risk_level }}</p>
+            <p class="mb-1"><strong>Expense Ratio:</strong> {{ comparison.fund1.expense_ratio }}</p>
+            <p class="mb-0"><strong>1Y / 3Y:</strong> {{ comparison.fund1.returns_1yr }}% / {{ comparison.fund1.returns_3yr }}%</p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card card-body bg-white shadow-sm">
+            <h5>{{ comparison.fund2.name }}</h5>
+            <p class="mb-1"><strong>Category:</strong> {{ comparison.fund2.category }}</p>
+            <p class="mb-1"><strong>Risk:</strong> {{ comparison.fund2.risk_level }}</p>
+            <p class="mb-1"><strong>Expense Ratio:</strong> {{ comparison.fund2.expense_ratio }}</p>
+            <p class="mb-0"><strong>1Y / 3Y:</strong> {{ comparison.fund2.returns_1yr }}% / {{ comparison.fund2.returns_3yr }}%</p>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

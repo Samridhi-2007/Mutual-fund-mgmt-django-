@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm bg-white">
+    <div class="card-body">
+        <h2>{{ article.title }}</h2>
+        <p class="text-secondary">Published: {{ article.created_at }}</p>
+        <p>{{ article.content }}</p>
+        <a href="{% url 'education' %}" class="btn btn-secondary">Back</a>
+        {% if request.user.is_authenticated %}
+            {% if request.user.role == 'ADMIN' or request.user.role == 'ADVISOR' %}
+            <a href="{% url 'article_update' article.pk %}" class="btn btn-primary">Edit</a>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

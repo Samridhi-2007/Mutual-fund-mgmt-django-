@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="mb-0">My Profile</h3>
+                    <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile</a>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <small class="text-secondary d-block">Username</small>
+                        <span class="fw-semibold">{{ user.username }}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <small class="text-secondary d-block">Role</small>
+                        <span class="fw-semibold">{{ user.role }}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <small class="text-secondary d-block">First Name</small>
+                        <span class="fw-semibold">{{ user.first_name|default:"Not set" }}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <small class="text-secondary d-block">Last Name</small>
+                        <span class="fw-semibold">{{ user.last_name|default:"Not set" }}</span>
+                    </div>
+                    <div class="col-12">
+                        <small class="text-secondary d-block">Email</small>
+                        <span class="fw-semibold">{{ user.email|default:"Not set" }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

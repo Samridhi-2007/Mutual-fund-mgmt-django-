@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm bg-white">
+    <div class="card-body">
+        <h2>{{ fund.name }}</h2>
+        <p><strong>Category:</strong> {{ fund.category }}</p>
+        <p><strong>Risk Level:</strong> {{ fund.risk_level }}</p>
+        <p><strong>Expense Ratio:</strong> {{ fund.expense_ratio }}</p>
+        <p><strong>1Y Return:</strong> {{ fund.returns_1yr }}%</p>
+        <p><strong>3Y Return:</strong> {{ fund.returns_3yr }}%</p>
+        <hr>
+        <h5>Fund Explanation</h5>
+        <ul class="mb-3">
+            {% for line in fund_explanation %}
+            <li>{{ line }}</li>
+            {% endfor %}
+        </ul>
+        <div class="d-flex gap-2">
+            <a href="{% url 'fund_list' %}" class="btn btn-secondary">Back</a>
+            {% if request.user.is_authenticated and request.user.role == 'INVESTOR' %}
+            <a href="{% url 'invest_in_fund' fund.pk %}" class="btn btn-success">Invest Now</a>
+            {% endif %}
+            {% if request.user.is_authenticated and request.user.role == 'ADMIN' %}
+            <a href="{% url 'fund_update' fund.pk %}" class="btn btn-primary">Edit</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

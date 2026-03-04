@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm bg-white">
+    <div class="card-body">
+        <h2>{{ advisor.name }}</h2>
+        <p><strong>Email:</strong> {{ advisor.email }}</p>
+        <p><strong>Expertise:</strong> {{ advisor.expertise }}</p>
+        <p><strong>Experience:</strong> {{ advisor.experience_years }} years</p>
+        <a href="{% url 'advisor_list' %}" class="btn btn-secondary">Back</a>
+        {% if request.user.is_authenticated and request.user.role == 'ADMIN' %}
+        <a href="{% url 'advisor_update' advisor.pk %}" class="btn btn-primary">Edit</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
